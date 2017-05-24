@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Nito.AsyncEx;
 
-namespace Foundatio.Extensions {
+namespace Foundatio.Utility {
     internal static class TaskExtensions {
         public static Task WaitAsync(this AsyncManualResetEvent resetEvent, TimeSpan timeout) {
             return resetEvent.WaitAsync(timeout.ToCancellationToken());
@@ -12,6 +12,12 @@ namespace Foundatio.Extensions {
 
         public static Task WaitAsync(this AsyncAutoResetEvent resetEvent, TimeSpan timeout) {
             return resetEvent.WaitAsync(timeout.ToCancellationToken());
+        }
+
+        public static void TryStart(this Task task) {
+            try {
+                task.Start();
+            } catch (InvalidOperationException) { }
         }
 
         [DebuggerStepThrough]

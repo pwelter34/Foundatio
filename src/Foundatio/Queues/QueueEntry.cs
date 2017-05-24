@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Foundatio.Extensions;
 using Foundatio.Utility;
 
 namespace Foundatio.Queues {
@@ -41,18 +40,10 @@ namespace Foundatio.Queues {
         }
 
         public Task CompleteAsync() {
-            if (IsAbandoned || IsCompleted)
-                throw new InvalidOperationException("Queue entry has already been completed or abandoned.");
-
-            IsCompleted = true;
             return _queue.CompleteAsync(this);
         }
 
         public Task AbandonAsync() {
-            if (IsAbandoned || IsCompleted)
-                throw new InvalidOperationException("Queue entry has already been completed or abandoned.");
-
-            IsAbandoned = true;
             return _queue.AbandonAsync(this);
         }
 
